@@ -36,20 +36,19 @@ def make_db_connection(brand):
     return conn
 
 
-def get_data(brand, type_of_data):
-    if brand == 'LB':
-        if type_of_data == extract_types[0]:
-            sql_string = 'select * from sups order by 1'
-        elif type_of_data == extract_types[1]:
-            sql_string = 'select * from partner order by 1'
-    elif brand == 'CA':
-        pass
-    elif brand == 'DRS':
-        pass
-    elif brand == 'MAU':
-        pass
+def get_data(type_of_data, conn_obj):
 
+    if type_of_data == extract_types[0]:
+        sql_string = 'SELECT * FROM sups ORDER by 1'
+    elif type_of_data == extract_types[1]:
+        sql_string = 'SELECT * FROM partner ORDER by 1'
+    cur = conn_obj.cursor()
+    cur.execute(sql_string)
+    data = cur.fetchall()
+    row_count = cur.rowcount
+    col_names = [row[0] for row in cur.description]
 
+    return data, col_names, row_count
 
 
 def write_excel(brand):
@@ -61,9 +60,10 @@ def write_excel(brand):
         print('Generated file: {}'.format(filename))
         # Make database connection
         db_conn = make_db_connection(brand)
-        # open cursor
-        cur = db_conn.cursor()
-        res = cur.execute()
+        # get supplier data
+        data, col_names, row_count = get_data(extract_types[0], db_conn)
+
+        
 
 
 
