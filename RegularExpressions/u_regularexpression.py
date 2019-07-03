@@ -33,4 +33,15 @@ def multi_re_find(patterns, phrase):
         print('\n')
 
 
+test_phrase = 'sdsd..sssddd...sdddsddd...dsds...dsssss...sdddd'
+test_patterns = ['sd*',
+                 's[sd]+',
+                 '[sd]+',
+                 'sd{3}',
+                 'sd{2,3}']
+multi_re_find(test_patterns, test_phrase)
 
+# Exclusion
+
+test_phase = 'This is String! But it has punctuation. How can we remove it?'
+print(re.findall('[^!.? ]+', test_phase))
