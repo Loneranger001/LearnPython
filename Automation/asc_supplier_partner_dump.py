@@ -11,6 +11,17 @@ t_day = datetime.now(tz=pytz.timezone('US/Pacific')).strftime('%Y%m%d')
 extract_types = ('supplier', 'partner', 'supplier_partner_matrix')
 sheet_names = ('Supplier', 'Partner', 'SupplierPartnerMatrix')
 
+'''
+tittle_style = xlwt.easyxf('font: height 400, name Arial Black, colour_index blue, bold on; align: wrap on, vert centre, horiz center;'      "borders: top double, bottom double, left double, right double;")
+subtittle_left_style = xlwt.easyxf('font: height 240, name Arial, colour_index brown, bold on, italic on; align: wrap on, vert centre, horiz left;'      "borders: top double, bottom double, left double;")
+subtittle_right_style = xlwt.easyxf('font: height 240, name Arial, colour_index brown, bold on, italic on; align: wrap on, vert centre, horiz left;'      "borders: top double, bottom double, right double;")
+subtittle_top_and_bottom_style = xlwt.easyxf('font: height 240, name Arial, colour_index black, bold off, italic on; align: wrap on, vert centre, horiz left;'      "borders: top double, bottom double;")
+blank_style = xlwt.easyxf('font: height 650, name Arial, colour_index brown, bold off; align: wrap on, vert centre, horiz left;'      "borders: top double, bottom double, left double, right double;")
+normal_style = xlwt.easyxf('font: height 240, name Arial, colour_index black, bold off; align: wrap on, vert centre, horiz left;'      "borders: top double, bottom double, left double, right double;")
+
+'''
+
+
 
 class InvalidBrand(Exception):
     """ This is a custom exception """
@@ -91,6 +102,29 @@ def write_excel(brand):
         # print(row_count)
         # create workbook object
         wb = xlwt.Workbook()
+        # custom style objects
+        heading_style = xlwt.easyxf('font: name Calibri, color_index red, bold on; align: wrap off, vert centre, horiz left;' "borders: top double, bottom double, left double, right double;")
+        data_style = xlwt.easyxf('font: name Calibri, color_index black, bold off; align: wrap off, vert centre, horiz left;' "borders: top thin, bottom thin, left thin, right thin;")
+
+        # font0 = xlwt.Font()
+        # font0.name = "Calibri"
+        # font0.colour_index = xlwt.Style.colour_map['red']
+        # font0.bold = True
+        #
+        # font1 = xlwt.Font()
+        # font1.name = "Calibri"
+        # # font1.colour_index = 2
+        # font1.bold = False
+        # # Heading level Style
+        # style0 = xlwt.XFStyle()
+        # style0.font = font0
+        # style0.borders = xlwt.Style.border_line_map['thick']
+        #
+        # # Data cells style
+        # style1 = xlwt.XFStyle()
+        # style1.font = font1
+        # style1.borders = xlwt.Style.border_line_map['thin']
+
         # Add the sheets
         sheet_1 = wb.add_sheet(sheet_names[0], cell_overwrite_ok=True)
         sheet_2 = wb.add_sheet(sheet_names[1], cell_overwrite_ok=True)
@@ -108,14 +142,14 @@ def write_excel(brand):
             # write the column names
             i = 0
             for name in col_names:
-                sheet.write(0, i, name)
+                sheet.write(0, i, name, heading_style)
                 i += 1
             # write the data
             k = 1
             for rows in data:
                 j = 0
                 for each_col in rows:
-                    sheet.write(k, j, each_col)
+                    sheet.write(k, j, each_col, data_style)
                     j += 1
                 k += 1
         wb.save(filename)
@@ -131,10 +165,10 @@ def write_excel(brand):
 
 
 if __name__ == '__main__':
-    write_excel('LB')
+    # write_excel('LB')
     write_excel('MAU')
-    write_excel('DRS')
-    write_excel('CA')
+    # write_excel('DRS')
+    # write_excel('CA')
 
 
 
