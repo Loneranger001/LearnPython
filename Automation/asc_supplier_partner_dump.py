@@ -103,8 +103,14 @@ def write_excel(brand):
         # create workbook object
         wb = xlwt.Workbook()
         # custom style objects
-        heading_style = xlwt.easyxf('font: name Calibri, color_index red, bold on; align: wrap off, vert centre, horiz left;' "borders: top double, bottom double, left double, right double;")
-        data_style = xlwt.easyxf('font: name Calibri, color_index black, bold off; align: wrap off, vert centre, horiz left;' "borders: top thin, bottom thin, left thin, right thin;")
+        heading_style = xlwt.easyxf('font: name Calibri, color_index red, bold on; '
+                                    'align: wrap off, vert centre, horiz left;' 
+                                    "borders: top double, bottom double, left double, right double;")
+        data_style = xlwt.easyxf('font: name Calibri, color_index black, bold off; '
+                                 'align: wrap on, vert centre, horiz left;'
+                                 "borders: top thin, bottom thin, left thin, right thin;")
+
+
 
         # font0 = xlwt.Font()
         # font0.name = "Calibri"
@@ -141,7 +147,10 @@ def write_excel(brand):
 
             # write the column names
             i = 0
+            # Setting default column width
+            col_width = 256*30
             for name in col_names:
+                sheet.col(i).width = col_width
                 sheet.write(0, i, name, heading_style)
                 i += 1
             # write the data
