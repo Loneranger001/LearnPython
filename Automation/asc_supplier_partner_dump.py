@@ -187,6 +187,7 @@ if __name__ == '__main__':
 
     # check parameter passed.
     usage()
+    # call excel generation functions for brands
     write_excel('LB')
     write_excel('MAU')
     write_excel('DRS')
