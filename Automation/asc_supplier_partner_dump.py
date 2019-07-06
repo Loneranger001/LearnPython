@@ -48,9 +48,6 @@ def make_db_connection(brand):
     # Take input from standard input.
     user = sys.argv[1]
     password = sys.argv[2]
-    # print('Number of arguments {0}'.format(len(sys.argv)))
-    # user = 'alaskar_db'
-    # password = 'Ascena2020!'
     lb_connectionstring = cx_Oracle.makedsn('ORAPRDCSTR01-SCAN.corp.local', 1521, service_name='RMSPRD.corp.local')
     ca_connectionstring = cx_Oracle.makedsn('ORAPRDCSTR01-SCAN.corp.local', 1521, service_name='RMSPRCA.corp.local')
     drs_connectionstring = cx_Oracle.makedsn('dbrmsproddb', 1521, 'RMSPRD')
