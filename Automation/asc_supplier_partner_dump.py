@@ -37,7 +37,7 @@ def zip_files():
 
 
 def usage():
-    print('Number of arguments {0}'.format(len(sys.argv)))
+    # print('Number of arguments {0}'.format(len(sys.argv)))
     if len(sys.argv) != 3:
         print('Usage: Python {0} {1} {2}'.format(os.path.basename(__file__), 'username', 'password'))
         sys.exit(1)
@@ -101,7 +101,8 @@ def write_excel(brand):
         defaultpath = os.getenv('TEMP')
         print('Files will be written to {0}'.format(defaultpath))
         os.chdir(defaultpath)
-        filename = brand + '_' + t_day + '.xls'
+        # filename = brand + '_' + t_day + '.xls'
+        filename = ''.join(['lb', '_', 'supplier_partner', '_', 'extract', '.xls'])
         print('Generated file: {}'.format(filename))
         # Make database connection
         db_conn = make_db_connection(brand)
