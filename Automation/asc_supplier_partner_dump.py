@@ -5,10 +5,13 @@ import cx_Oracle
 from datetime import datetime
 import pytz
 import traceback
+from zipfile import ZipFile
 
 t_day = datetime.now(tz=pytz.timezone('US/Pacific')).strftime('%Y%m%d')
 extract_types = ('supplier', 'partner', 'supplier_partner_matrix')
 sheet_names = ('Supplier', 'Partner', 'SupplierPartnerMatrix')
+# create a new zip file
+newzip = ZipFile('SupplierPartnerExtract.zip', 'w')
 
 '''
 tittle_style = xlwt.easyxf('font: height 400, name Arial Black, colour_index blue, bold on; align: wrap on, vert centre, horiz center;'      "borders: top double, bottom double, left double, right double;")
@@ -32,8 +35,12 @@ def send_mail(*args):
         print('Email {}'.format(arg))
 
 
-def zip_files():
-    pass
+def zip_files(file):
+    if os.path.exists(file):
+        newzip.write(file)
+        print('{0} added to zip'.format(file))
+    else:
+        print('{0} does not exits in {1}'.format(file, os.curdir()))
 
 
 def usage():
@@ -101,8 +108,9 @@ def write_excel(brand):
         defaultpath = os.getenv('TEMP')
         print('Files will be written to {0}'.format(defaultpath))
         os.chdir(defaultpath)
+        print('Working directory changed to {0}'.format(defaultpath))
         # filename = brand + '_' + t_day + '.xls'
-        filename = ''.join(['lb', '_', 'supplier_partner', '_', 'extract', '.xls'])
+        filename = ''.join([brand, '_', 'supplier_partner', '_', 'extract', '.xls'])
         print('Generated file: {}'.format(filename))
         # Make database connection
         db_conn = make_db_connection(brand)
@@ -170,6 +178,8 @@ def write_excel(brand):
                     j += 1
                 k += 1
         wb.save(filename)
+        # call zip function to add the file
+        zip_files(filename)
     except InvalidBrand:
         print('Invalid Brand Name, Program wil now exit.')
         raise
