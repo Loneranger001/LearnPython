@@ -39,7 +39,7 @@ def zip_files():
 def usage():
     print('Number of arguments {0}'.format(len(sys.argv)))
     if len(sys.argv) != 3:
-        print('Usage: {0} {1} {2}'.format(sys.argv[0], 'username', 'password'))
+        print('Usage: Python {0} {1} {2}'.format(os.path.basename(__file__), 'username', 'password'))
         sys.exit(1)
 
 
